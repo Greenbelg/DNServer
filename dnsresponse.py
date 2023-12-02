@@ -26,8 +26,10 @@ def format_hex(hex):
     pairs = [" ".join(octets[i:i+2]) for i in range(0, len(octets), 2)]
     return "\n".join(pairs)
 
-
-message = dnsquery.dnsquery().get_query_for("google.com")
+b = dnsquery.dnsquery()
+message = b.get_query_for("example.com")
 
 response = send_udp_message(message, "8.8.8.8", 53)
-print(format_hex(response)) 
+b.a = b.a.replace(" ", "").replace("\n", "")
+l = len(bin(int(b.a, 16))[2:].zfill(8))
+print(bin(int(response, 16))[2:].zfill(8)[l:][112:]) 
